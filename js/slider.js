@@ -24,7 +24,8 @@ HlSlider.prototype.intializeEventListener = function() {
 
 HlSlider.prototype.intializeSlider = function() {
     var mainContainer = document.querySelector(this.selector);
-    this.mainContainerWidth = document.querySelector(this.selector).offsetWidth;
+    this.mainContainerWidth = window.outerWidth;
+    // this.mainContainerWidth = document.querySelector(this.selector).offsetWidth;
 
     this.slidesWrapper = mainContainer.querySelector('.hl-slider-wrapper');
     this.totalSlidesLength = this.slidesWrapper.children.length;

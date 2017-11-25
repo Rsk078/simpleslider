@@ -7,9 +7,9 @@ body,html{
 }
 .hl-slider{
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden !important;
     position: relative;
-
+    
 }
 .hl-slider-wrapper{
     position: relative;

@@ -7,7 +7,8 @@ var HlSlider = function(selector,options) {
     this.intializeSlider();
     this.intializeEventListener();
     this.intializePagination();
-}
+    this.autoplay();
+    }
 
 HlSlider.prototype.intializeEventListener = function() {
     // navigation btn
@@ -109,15 +110,13 @@ HlSlider.prototype.translateSlidesModule = function () {
 }
 
 HlSlider.prototype.nextSlide = function() {
-    console.log('nextslide');
     if (this.current < this.totalSlidesLength - 1) {
-        console.log('insideif');
         this.beforeCurrentValueUpdate();
         let previousSlide = this.current;
         this.current += 1;
         this.afterCurrentValueUpdate();
         this.translateSlidesModule();
-        this.options.slideChangeCallBack(previousSlide, this.current);
+        // this.options.slideChangeCallBack(previousSlide, this.current);
     }else{
         
     }
@@ -130,8 +129,34 @@ HlSlider.prototype.previousSlide = function () {
         this.current -= 1;
         this.afterCurrentValueUpdate();
         this.translateSlidesModule();
-        this.options.slideChangeCallBack(previousSlide, this.current);
+        // this.options.slideChangeCallBack(previousSlide, this.current);
     }
+}
+
+HlSlider.prototype.autoplay = function() {
+    var self = this;
+    if(this.options.autoplay) {
+    function hh() {
+        if ( self.current < self.totalSlidesLength-1) {
+            self.beforeCurrentValueUpdate();
+            self.current += 1;
+            self.afterCurrentValueUpdate();
+            self.translateSlidesModule();
+            console.log("holad" + self.current);
+            setTimeout(hh, self.options.speed);
+            console.log("holad" + self.current);
+        }else{
+            self.beforeCurrentValueUpdate();
+            self.current = 0;
+            console.log("holal" + self.current);
+            self.afterCurrentValueUpdate();
+            self.translateSlidesModule();
+            setTimeout(hh, self.options.speed);
+        }
+
+    }
+    setTimeout(hh, self.options.speed);
+}
 }
 // closure
 // function createClickHandler(index) {
@@ -150,8 +175,7 @@ var HlBullets = function(hlSlider, index) {
                 hlSlider.current = index;
                 hlSlider.afterCurrentValueUpdate();
                 hlSlider.translateSlidesModule();
-                hlSlider.options.slideChangeCallBack(previousSlide, hlSlider.current);
-                
+                // hlSlider.options.slideChangeCallBack(previousSlide, hlSlider.current);
             }
 
             if (index < hlSlider.current) {
@@ -160,7 +184,7 @@ var HlBullets = function(hlSlider, index) {
                 hlSlider.current = index;
                 hlSlider.afterCurrentValueUpdate();
                 hlSlider.translateSlidesModule();
-                hlSlider.options.slideChangeCallBack(previousSlide, hlSlider.current);
+                // hlSlider.options.slideChangeCallBack(previousSlide, hlSlider.current);
                 
             }
         }

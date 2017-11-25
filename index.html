@@ -49,9 +49,11 @@
         nextSlide: '.next-slide-btn',
         previousSlide: '.previous-slide-btn',
         pagination: '.hl-pagination',
-        slideChangeCallBack: function(previousSlide, currentSlide) {
-            console.log('callBack : transition from : ' + previousSlide + " to : " + currentSlide);
-        }
+        autoplay: true,
+        speed: 1000
+        // slideChangeCallBack: function(previousSlide, currentSlide) {
+        //     console.log('callBack : transition from : ' + previousSlide + " to : " + currentSlide);
+        // }
     }
     var slider = new HlSlider('.hl-slider',options);
 

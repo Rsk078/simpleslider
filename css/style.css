@@ -1,0 +1,107 @@
+body,html{
+    margin: 0;
+    padding: 0;
+}
+*{
+    box-sizing: border-box;
+}
+.hl-slider{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+
+}
+.hl-slider-wrapper{
+    position: relative;
+    -webkit-transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    -moz-transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+}
+.hl-slider-wrapper:after{
+    display: table;
+    content: " ";
+    clear: both;
+}
+.hl-slides{
+    float: left;
+    height: 100%;
+    overflow: hidden;
+}
+
+img{
+    width: 100%;
+}
+.change-slide{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    color: #000;
+    background: #fff;
+    cursor: pointer;
+}
+.next-slide-btn{
+    right: 0;
+ }
+ .previous-slide-btn{
+    left: 0;
+ }
+
+ /* pagination */
+
+ .hl-pagination{
+     position: fixed;
+     bottom: 100px;
+     z-index: 1;
+     width: 100%;
+     padding: 10px;
+     text-align: center;
+ }
+
+ .outer-circle{
+     background: rgb(255, 255, 255);
+     width: 15px;
+     height: 15px;
+     border-radius: 50px;
+     position: relative;
+     display: inline-block;
+     margin-right: 5px;
+     cursor: pointer;
+     box-shadow: 2px 2px 3px 1px rgba(0,0,0,.1);
+ }
+
+ .inner-circle{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+    background: linear-gradient(135deg, #55d6ea 16%, #7182b1 58%, rgba(109, 4, 255, 0.88) 100%);
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: transform .3s ease;
+    -moz-transition: transform .3s ease;
+    transition: transform .3s ease;
+ }
+
+  .outer-circle.active .inner-circle{
+      -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+
+  .change-slide.last-item{
+      display: none;
+  }
+    .change-slide.first-item{
+      display: none;
+  }

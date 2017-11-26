@@ -8,6 +8,8 @@ var HlSlider = function(selector,options) {
     this.intializeEventListener();
     this.intializePagination();
     this.autoplay();
+
+    console.log(this);
     }
 
 HlSlider.prototype.intializeEventListener = function() {
@@ -117,6 +119,8 @@ HlSlider.prototype.nextSlide = function() {
         this.afterCurrentValueUpdate();
         this.translateSlidesModule();
         // this.options.slideChangeCallBack(previousSlide, this.current);
+        clearTimeout(this.autoplayTimeout);
+        this.autoplay();
     }else{
         
     }
@@ -130,33 +134,35 @@ HlSlider.prototype.previousSlide = function () {
         this.afterCurrentValueUpdate();
         this.translateSlidesModule();
         // this.options.slideChangeCallBack(previousSlide, this.current);
+        clearTimeout(this.autoplayTimeout);
+        this.autoplay();
     }
 }
 
 HlSlider.prototype.autoplay = function() {
     var self = this;
     if(this.options.autoplay) {
-    function hh() {
-        if ( self.current < self.totalSlidesLength-1) {
-            self.beforeCurrentValueUpdate();
-            self.current += 1;
-            self.afterCurrentValueUpdate();
-            self.translateSlidesModule();
-            console.log("holad" + self.current);
-            setTimeout(hh, self.options.speed);
-            console.log("holad" + self.current);
-        }else{
-            self.beforeCurrentValueUpdate();
-            self.current = 0;
-            console.log("holal" + self.current);
-            self.afterCurrentValueUpdate();
-            self.translateSlidesModule();
-            setTimeout(hh, self.options.speed);
-        }
+        function hh() {
+            if ( self.current < self.totalSlidesLength-1) {
+                self.beforeCurrentValueUpdate();
+                // let previousSlide = self.current;
+                self.current += 1;
+                self.afterCurrentValueUpdate();
+                self.translateSlidesModule();
+                self.autoplayTimeout = setTimeout(hh, self.options.speed);
+                console.log("holad" + self.current);
+            }else{
+                self.beforeCurrentValueUpdate();
+                self.current = 0;
+                console.log("holal" + self.current);
+                self.afterCurrentValueUpdate();
+                self.translateSlidesModule();
+                self.autoplayTimeout = setTimeout(hh, self.options.speed);
+            }
 
+        }
+        self.autoplayTimeout = setTimeout(hh, self.options.speed);
     }
-    setTimeout(hh, self.options.speed);
-}
 }
 // closure
 // function createClickHandler(index) {
@@ -175,6 +181,8 @@ var HlBullets = function(hlSlider, index) {
                 hlSlider.current = index;
                 hlSlider.afterCurrentValueUpdate();
                 hlSlider.translateSlidesModule();
+                clearTimeout(hlSlider.autoplayTimeout);
+                hlSlider.autoplay();
                 // hlSlider.options.slideChangeCallBack(previousSlide, hlSlider.current);
             }
 
@@ -184,8 +192,9 @@ var HlBullets = function(hlSlider, index) {
                 hlSlider.current = index;
                 hlSlider.afterCurrentValueUpdate();
                 hlSlider.translateSlidesModule();
+                clearTimeout(hlSlider.autoplayTimeout);
+                hlSlider.autoplay();
                 // hlSlider.options.slideChangeCallBack(previousSlide, hlSlider.current);
-                
             }
         }
     });

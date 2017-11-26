@@ -37,9 +37,9 @@
                 </div>
             </div>
             <div class="hl-pagination"></div>
+            <div class="change-slide next-slide-btn">Next</div>
+            <div class="change-slide previous-slide-btn">Previous</div>
         </div>
-        <div class="change-slide next-slide-btn">Next</div>
-        <div class="change-slide previous-slide-btn">Previous</div>
     </body>
     <script src="js/slider.js"></script>
 </html>
@@ -50,7 +50,8 @@
         previousSlide: '.previous-slide-btn',
         pagination: '.hl-pagination',
         autoplay: true,
-        speed: 3000
+        speed: 2000,
+        toggleAutoplay: true, 
         // slideChangeCallBack: function(previousSlide, currentSlide) {
         //     console.log('callBack : transition from : ' + previousSlide + " to : " + currentSlide);
         // }

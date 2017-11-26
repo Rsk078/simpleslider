@@ -8,6 +8,7 @@ var HlSlider = function(selector,options) {
     this.intializeEventListener();
     this.intializePagination();
     this.autoplay();
+    this.toggleAutoplay();
 
     console.log(this);
     }
@@ -26,11 +27,11 @@ HlSlider.prototype.intializeEventListener = function() {
 }
 
 HlSlider.prototype.intializeSlider = function() {
-    var mainContainer = document.querySelector(this.selector);
+    this.mainContainer = document.querySelector(this.selector);
     this.mainContainerWidth = window.outerWidth;
     // this.mainContainerWidth = document.querySelector(this.selector).offsetWidth;
 
-    this.slidesWrapper = mainContainer.querySelector('.hl-slider-wrapper');
+    this.slidesWrapper = this.mainContainer.querySelector('.hl-slider-wrapper');
     this.totalSlidesLength = this.slidesWrapper.children.length;
 
 
@@ -142,27 +143,51 @@ HlSlider.prototype.previousSlide = function () {
 HlSlider.prototype.autoplay = function() {
     var self = this;
     if(this.options.autoplay) {
-        function hh() {
+        function startAutoplay() {
             if ( self.current < self.totalSlidesLength-1) {
                 self.beforeCurrentValueUpdate();
                 // let previousSlide = self.current;
                 self.current += 1;
                 self.afterCurrentValueUpdate();
                 self.translateSlidesModule();
-                self.autoplayTimeout = setTimeout(hh, self.options.speed);
-                console.log("holad" + self.current);
+                self.autoplayTimeout = setTimeout(startAutoplay, self.options.speed);
             }else{
                 self.beforeCurrentValueUpdate();
                 self.current = 0;
-                console.log("holal" + self.current);
                 self.afterCurrentValueUpdate();
                 self.translateSlidesModule();
-                self.autoplayTimeout = setTimeout(hh, self.options.speed);
+                self.autoplayTimeout = setTimeout(startAutoplay, self.options.speed);
             }
-
         }
-        self.autoplayTimeout = setTimeout(hh, self.options.speed);
+        self.autoplayTimeout = setTimeout(startAutoplay, self.options.speed);
     }
+}
+
+HlSlider.prototype.toggleAutoplay = function () {
+        var self = this;
+        var play = 1;
+    if(this.options.toggleAutoplay) {
+        this.autoplayButton = document.createElement('div');
+        this.mainContainer.appendChild(this.autoplayButton);
+        this.autoplayButton.setAttribute('class', 'autoplay-button active');
+        this.autoplayButton.addEventListener('click', function() {
+            if (play == 1) {
+                clearTimeout(self.autoplayTimeout);
+                self.autoplayTimeout = 0;
+                play = 0;
+                self.autoplayButton.classList.remove('active')
+            }
+            else if (play != 1) {
+                console.log('jjjj');
+                clearTimeout(self.autoplayTimeout);
+                self.autoplay();
+                play = 1;
+                self.autoplayButton.classList.add('active')
+            }
+        });
+    }
+
+
 }
 // closure
 // function createClickHandler(index) {

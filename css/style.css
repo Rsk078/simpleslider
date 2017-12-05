@@ -8,6 +8,7 @@ body,html{
 .hl-slider{
     width: 100%;
     overflow-x: hidden !important;
+    overflow-y: hidden !important;
     position: relative;
     
 }
@@ -25,10 +26,18 @@ body,html{
     content: " ";
     clear: both;
 }
-.hl-slides{
+.horizontal-slider .hl-slides{
     float: left;
     height: 100%;
     overflow: hidden;
+}
+.verticle-slider .hl-slides{
+    float: none;
+    height: 100%;
+    overflow: hidden;
+}
+.verticle-slider .hl-slides img{
+    height: 100%;
 }
 
 img{

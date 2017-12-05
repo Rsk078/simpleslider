@@ -4,14 +4,95 @@ var HlSlider = function(selector,options) {
     var self = this;
     this.current = 0;
 
-    this.intializeSlider();
-    this.intializeEventListener();
-    this.intializePagination();
-    this.autoplay();
-    this.toggleAutoplay();
-
+    if (this.options.sliderOrientation == 'horizontal-slider'){
+        this.intializeSlider();
+        this.intializeEventListener();
+        this.intializePagination();
+        this.autoplay();
+        this.toggleAutoplay();
+    }
+    if (this.options.sliderOrientation == 'verticle-slider') {
+        this.intializeVerticleSlider();
+        this.intializeVerticleEventListener();
+    }
+        
     console.log(this);
     }
+
+HlSlider.prototype.intializeVerticleSlider = function() {
+    this.mainContainer = document.querySelector(this.selector);
+    this.mainContainerHeight = window.innerHeight;
+    // this.mainContainerHeight = document.querySelector(this.selector).offsetHeight;
+    console.log(this.mainContainerHeight);
+    this.slidesWrapper = this.mainContainer.querySelector('.hl-slider-wrapper');
+    this.totalSlidesLength = this.slidesWrapper.children.length;
+
+
+    var containerHeight = this.slidesWrapper.querySelector('.hl-slides').offsetHeight;
+    this.arraySlides = this.slidesWrapper.querySelectorAll('.hl-slides');
+
+    this.containerTotalHeight = (this.totalSlidesLength * this.mainContainerHeight);
+    console.log(this.containerTotalHeight);
+}
+HlSlider.prototype.intializeVerticleEventListener = function () {
+    // navigation btn
+    var self = this;
+    document.querySelector(this.options.nextSlide).addEventListener('click', function () {
+        //self.current - 2
+        self.nextVerticleSlide();
+    });
+    document.querySelector(this.options.previousSlide).addEventListener('click', function () {
+        self.previousVerticleSlide();
+
+    });
+}
+
+HlSlider.prototype.nextVerticleSlide = function () {
+    console.log('clicked');
+    if (this.current < this.totalSlidesLength - 1) {
+        this.beforeVerticleCurrentValueUpdate();
+        let previousSlide = this.current;
+        this.current += 1;
+        this.afterVerticleCurrentValueUpdate();
+        this.translateVerticleSlidesModule();
+        // this.options.slideChangeCallBack(previousSlide, this.current);
+    }
+}
+HlSlider.prototype.previousVerticleSlide = function () {
+    console.log('clicked');
+    if (this.current != 0) {
+        this.beforeVerticleCurrentValueUpdate();
+        let previousSlide = this.current;
+        this.current -= 1;
+        this.afterVerticleCurrentValueUpdate();
+        this.translateVerticleSlidesModule();
+        // this.options.slideChangeCallBack(previousSlide, this.current);
+    }
+}
+HlSlider.prototype.beforeVerticleCurrentValueUpdate = function () {
+    if (this.current == this.arraySlides.length - 1) {
+        document.querySelector(this.options.nextSlide).classList.remove('last-item');
+    }
+    if (this.current == 0) {
+        document.querySelector(this.options.previousSlide).classList.remove('first-item');
+    }
+}
+
+HlSlider.prototype.afterVerticleCurrentValueUpdate = function () {
+    if (this.current == this.arraySlides.length - 1) {
+        document.querySelector(this.options.nextSlide).classList.add('last-item');
+    }
+    if (this.current == 0) {
+        document.querySelector(this.options.previousSlide).classList.add('first-item');
+    }
+}
+
+HlSlider.prototype.translateVerticleSlidesModule = function () {
+    console.log(this.current);
+    this.slidesWrapper.style.transform = "translateY(" + (this.mainContainerHeight) * -this.current + "px)";
+}
+
+
 
 HlSlider.prototype.intializeEventListener = function() {
     // navigation btn
@@ -112,6 +193,7 @@ HlSlider.prototype.translateSlidesModule = function () {
     this.slidesWrapper.style.transform = "translateX(" + (this.mainContainerWidth + this.options.slidesSpaceBetween) * -this.current + "px)";
 }
 
+
 HlSlider.prototype.nextSlide = function() {
     if (this.current < this.totalSlidesLength - 1) {
         this.beforeCurrentValueUpdate();
@@ -171,18 +253,17 @@ HlSlider.prototype.toggleAutoplay = function () {
         this.mainContainer.appendChild(this.autoplayButton);
         this.autoplayButton.setAttribute('class', 'autoplay-button active');
         this.autoplayButton.addEventListener('click', function() {
+            clearTimeout(self.autoplayTimeout);
             if (play == 1) {
-                clearTimeout(self.autoplayTimeout);
                 self.autoplayTimeout = 0;
                 play = 0;
-                self.autoplayButton.classList.remove('active')
+                self.autoplayButton.classList.remove('active');
             }
             else if (play != 1) {
                 console.log('jjjj');
-                clearTimeout(self.autoplayTimeout);
                 self.autoplay();
                 play = 1;
-                self.autoplayButton.classList.add('active')
+                self.autoplayButton.classList.add('active');
             }
         });
     }

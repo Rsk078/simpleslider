@@ -5,20 +5,17 @@ var HlSlider = function(selector,options) {
     this.current = 0;
 
     if (this.options.sliderOrientation == 'horizontal-slider'){
-        console.log(this.mainContainer+" he");
         this.intializeSlider();
         this.intializeEventListener();
         this.intializePagination();
         this.autoplay();
         this.toggleAutoplay();
         this.mainContainer.classList.add('horizontal-slider');
-        this.mainContainer.classList.remove('vertical-slider');
     }
     if (this.options.sliderOrientation == 'vertical-slider') {
         this.intializeVerticalSlider();
         this.intializeVerticalEventListener();
         this.mainContainerVertical.classList.add('vertical-slider');
-        this.mainContainerVertical.classList.remove('horizontal-slider');
     }
         
     console.log(this);

@@ -1,14 +1,16 @@
 body,html{
     margin: 0;
     padding: 0;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
 }
 *{
     box-sizing: border-box;
 }
 .hl-slider{
     width: 100%;
-    overflow-x: hidden !important;
     overflow-y: hidden !important;
+    overflow-x: hidden !important;
     position: relative;
     
 }

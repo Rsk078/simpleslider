@@ -19,9 +19,15 @@ var HlSlider = function(selector,options) {
         this.mainContainerVertical.classList.add('vertical-slider');
     }
 
-    
-    window.addEventListener('scroll', function (e) {
-        self.nextVerticalSlide();
+    var hola = 0;
+    window.addEventListener('mousewheel', function (e) {
+        console.log(hola);
+        if (document.body.scrollTop > hola) {
+            self.nextVerticalSlide();
+        }else{
+            self.previousVerticalSlide();
+        }
+        hola = document.body.scrollTop;
     });
 }
 
